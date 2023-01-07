@@ -1,20 +1,42 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Customer extends CI_Controller {
+class Customer extends CI_Controller 
+{
+	
+	var $key_name = 'KEY-API';
+	var $key_value = 'RESTAPI';
+	var $key_bearer = 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzMxMDExMzB9.XJ7bsK-MO1sBAbtHD3ccEAqhZVp3F2nJe7BX5kRjsDA';
 	
 	public function index()
 	{
-		$data["tampil"] = json_decode($this->client->simple_get(APICUSTOMER));
+		$this->client->http_header($this->key_bearer);
 
-		
-		// foreach($data["tampil"] -> customer as $record)
-		// {
-		// 	echo $result->kodepesanan_ctr."<br>";
-		// }
+		$data["tampil"] = json_decode($this->client->simple_get(APICUSTOMER, [$this->key_name => $this->key_value]));
 
-		$this->load->view('vw_customer', $data);
+		if ($data["tampil"]->result == 0) {
+			echo"<script>location.href='https://google.com'</script>";
+		} else {
+			$this->load->view('vw_customer', $data);
+		}
+	}
 
+	function setDelete()
+	{
+		$this->client->http_header($this->key_bearer);
+
+		// buat variabel json
+		$json = file_get_contents("php://input");
+		$hasil = json_decode($json);
+
+
+		$delete = json_decode($this->client->simple_delete(APICUSTOMER, array("kodepesanan" => $hasil->kodepesanannya, $this->key_name => $this->key_value)));
+
+		if ($delete->result == 0) {
+			echo json_encode(array("statusnya" => $delete->error));
+		} else {
+			echo json_encode(array("statusnya" => $delete->status));
+		}
 	}
 
 	function dashboard()
@@ -33,23 +55,7 @@ class Customer extends CI_Controller {
 		];
 		$this->load->view('vw_sablon', $data);
 	}
-
-
-	function setDelete()
-	{
-		// buat variabel json
-		$json = file_get_contents("php://input");
-		$hasil = json_decode($json);
-
-		$delete = json_decode($this->client->simple_delete(APICUSTOMER, array("kodepesanan" => $hasil -> kodepesanannya)));
-
-		// isi nilai err
-		// $err = 0;
-
-		// kirim hasil ke "vw_customer"
-		echo json_encode(array("statusnya" => $delete -> status));
-	}
-
+	
 	function addCustomer()
 	{
 		$this->load->view('en_customer');
@@ -57,42 +63,77 @@ class Customer extends CI_Controller {
 
 	function setSave()
 	{
+		$this->client->http_header($this->key_bearer);
 		// baca nilai dari fetch
 		$data = array (
 			"kodepesanan" => $this->input->post("kodepesanannya"),
 			"nama" => $this->input->post("namanya"),
 			"telepon" => $this->input->post("teleponnya"),
 			"konsumen" => $this->input->post("konsumennya"),
-			"token" => $this->input->post("kodepesanannya")
+			"token" => $this->input->post("kodepesanannya"),
+			$this->key_name => $this->key_value
 		);
 
 		$save = json_decode($this->client->simple_post(APICUSTOMER, $data));
 
 		// kirim hasil ke "en_customer"
-		echo json_encode(array("statusnya" => $save -> status));
+		if ($save->result == 0) {
+			echo json_encode(array("statusnya" => $save->error));
+		} else {
+			echo json_encode(array("statusnya" => $save->status));
+		}
 	}
 	function updateCustomer()
 	{
-		// $segmen = $this->uri->total_segments();
-		// ambil nilai kodepesanan (berdasarkan segmen)
+		$this->client->http_header($this->key_bearer);
+
+		// ambil nilai npm
 		$token = $this->uri->segment(3);
 
-		
-		$tampil = json_decode($this->client->simple_get(APICUSTOMER, array("kodepesanan" => $token)));
+		$tampil = json_decode($this->client->simple_get(APICUSTOMER, array("kodepesanan" => $token, $this->key_name => $this->key_value)));
 
-		foreach ($tampil -> Customer as $record)
-		{
-			$data = array(
-			"kodepesanan" => $record->kodepesanan_ctr,
-			"nama" =>	$record->nama_ctr,
-			"telepon" => $record->telepon_ctr,
-			"konsumen" => $record->konsumen_ctr,
-			"token"=> $token
-			);
-			
+		if ($tampil->result == 0) {
+			echo $tampil->error;
+		} else {
+
+			foreach ($tampil->customer as $result) {
+				// echo $result->nama_ctr."<br>";
+				$data = array(
+					"kodepesanan" => $result->kodepesanan_ctr,
+					"nama" => $result->nama_ctr,
+					"telepon" => $result->telepon_ctr,
+					"konsumen" => $result->konsumen_ctr,
+					"token" => $token,
+				);
+			}
+			$this->load->view('up_customer', $data);
 		}
-		
-		$this->load->view('up_customer', $data);
+	}
 
+
+// buat fungsi untuk ubah data customer
+	function setUpdate()
+	{
+		$this->client->http_header($this->key_bearer);
+
+		// baca nilai dari fetch
+		$data = array(
+			"kodepesanan" => $this->input->post("kodepesanannya"),
+			"nama" => $this->input->post("namanya"),
+			"telepon" => $this->input->post("teleponnya"),
+			"konsumen" => $this->input->post("konsumennya"),
+			"token" => $this->input->post("tokennya"),
+			$this->key_name => $this->key_value
+		);
+
+		$update = json_decode($this->client->simple_put(APICUSTOMER, $data));
+
+		// kirim hasil ke "up_customer"
+		if ($update->result == 0) {
+			echo json_encode(array("statusnya" => $update->error));
+		} else {
+			echo json_encode(array("statusnya" => $update->status));
+		}
 	}
 }
+
