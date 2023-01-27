@@ -5,17 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ubah Data Customer</title>
-
+<!-- import fontawesome (CSS) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- import file "style.css" -->
+    <link rel="stylesheet" href="<?php echo base_url("ext/style.css")?>" />
+    <?php $this->load->view('partials/head.php'); ?>
+    
     <!-- import file "style.css" -->
     <link rel="stylesheet" href="<?php echo base_url("ext/style.css")?>" />
 </head>
 <body>
-    <!-- buat menu/button -->
-    <nav class="area-menu">
-        <button id="btn_lihat" class="btn-primary">Lihat</button>
-        <button id="btn_refresh" class="btn-secondary" onclick="return setRefresh()">Refresh</button>
-    </nav>
-
     <!-- buat area untuk entry data -->
     <main class="area-grid">
         <section class="item-label1">
@@ -79,11 +78,17 @@
             </p>
         </section>
     </main>
-    <!-- buat menu/button save -->
+    
     <nav class="area-menu">
+        <button id="btn_lihat" class="btn-primary">Lihat</button>
+        <button id="btn_refresh" class="btn-secondary" onclick="return setRefresh()">Refresh</button>
+    </nav>
+
+        <!-- buat menu/button save -->
+    <nav class="area-btn">
         <button id="btn_simpan" class="btn-primary">Simpan</button>
     </nav>
-    
+
     <!-- import file script.js -->
     <script src="<?= base_url("ext/script.js") ?>"></script>
 
@@ -100,8 +105,8 @@
         txt_telepon.value = '<?= $telepon ?>'
 
         // inisialisasi object
+        let btn_hasil = document.getElementById("btn_hasil");
         let btn_lihat = document.getElementById("btn_lihat");
-        let btn_simpan = document.getElementById("btn_simpan");
 
         // buat event untuk "btn_lihat"
         btn_lihat.addEventListener('click', function(){
@@ -141,7 +146,7 @@
                 err_kodepesanan.style.display = "unset";
                 lbl_kodepesanan.style.color = "#f00";
                 txt_kodepesanan.style.borderColor = "#f00";
-                err_kodepesanan.innerHTML = "NPM Harus Diisi !";
+                err_kodepesanan.innerHTML = "Kode Pesanan Harus Diisi !";
             }
             // jika kodepesanan diisi
             else
@@ -211,10 +216,10 @@
             if(err_kodepesanan.innerHTML === "" && nama[3] === "" && telepon[3] === "" && konsumen[3] === "" )
             {
                 // panggil function setSave
-                setSave(txt_kodepesanan.value,txt_nama.value,txt_telepon.value,cbo_konsumen.value)
+                setUpdate(txt_kodepesanan.value,txt_nama.value,txt_telepon.value,cbo_konsumen.value,token);
 
             }
-        })
+        });
         const setUpdate = async(kodepesanan,nama,telepon,konsumen,token) => {
             // buat variabel untuk form
             let form = new FormData();

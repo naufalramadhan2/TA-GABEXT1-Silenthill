@@ -19,14 +19,16 @@
 </head>
 <body>
     <!-- buat menu/button -->
-    <nav class="area-menu">
-        <button id="btn_tambah" class="btn-primary">Tambah</button>
-        <button id="btn_refresh" class="btn-secondary" onclick="setRefresh()">Refresh</button>
-        <ul class="nav__wrapper">
-            <li class="nav__item"><a href="<?php echo base_url('Customer/sablon') ?>">Hasil Sablon</a></li>
-          </ul>
+    <nav class="area-btn">
+        <button id="btn_dashboard" class="btn-primary">Dashboard</button>
     </nav>
-
+    <script>
+         // buat event untuk "btn_hasil"
+             btn_dashboard.addEventListener('click', function(){
+            // alihkan ke halaman hasil sablon
+            location.href="<?php echo site_url("Customer/dashboard");?>"
+        })
+    </script>
     <!-- buat table data customer-->
     <table>
         <!-- buat judul tabel -->
@@ -49,7 +51,7 @@
                 $no = 1;
 
                 // perulangan
-                foreach($tampil->Customer as $result)
+                foreach($tampil->customer as $result)
                 // echo $result."<br>";
                 {
             ?>
@@ -82,7 +84,9 @@
     </table>
     <!-- import fontawesome (JS) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js" integrity="sha512-naukR7I+Nk6gp7p5TMA4ycgfxaZBJ7MO5iC3Fp6ySQyKFHOGfpkSZkYVWV5R7u7cfAicxanwYQ5D1e17EfJcMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <br>
+    <button id="btn_tambah" class="btn-primary">Tambah</button>
+    <button id="btn_refresh" class="btn-secondary" onclick="setRefresh()">Refresh</button>
     <script>
         let btn_tambah = document.getElementById("btn_tambah");
 

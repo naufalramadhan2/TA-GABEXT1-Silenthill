@@ -11,11 +11,6 @@
 </head>
 <body>
     <!-- buat menu/button -->
-    <nav class="area-menu">
-        <button id="btn_lihat" class="btn-primary">Lihat</button>
-        <button id="btn_refresh" class="btn-secondary" onclick="setRefresh()">Refresh</button>
-    </nav>
-
     <!-- buat area untuk entry data -->
     <main class="area-grid">
         <section class="item-label1">
@@ -79,14 +74,17 @@
             </p>
         </section>
     </main>
-    <!-- buat menu/button save -->
-    <nav class="area-menu">
+    <!-- buat menu/button lihat -->
+     <script src="<?= base_url("ext/script.js") ?>"></script>
+     <nav class="area-menu">
+        <button id="btn_lihat" class="btn-primary">Lihat</button>
+        <button id="btn_refresh" class="btn-secondary" onclick="setRefresh()">Refresh</button>
+    </nav>
+
+    <nav class="area-btn">
         <button id="btn_simpan" class="btn-primary">Simpan</button>
     </nav>
     
-     <!-- import file script.js -->
-     <script src="<?= base_url("ext/script.js") ?>"></script>
-
     <script>
         // inisialisasi object
         let btn_lihat = document.getElementById("btn_lihat");
@@ -130,7 +128,7 @@
                 err_kodepesanan.style.display = "unset";
                 lbl_kodepesanan.style.color = "#f00";
                 txt_kodepesanan.style.borderColor = "#f00";
-                err_kodepesanan.innerHTML = "NPM Harus Diisi !";
+                err_kodepesanan.innerHTML = "Kode Pesanan Harus Diisi !";
             }
             // jika kodepesanan diisi
             else
