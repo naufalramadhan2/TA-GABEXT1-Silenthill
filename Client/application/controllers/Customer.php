@@ -6,7 +6,7 @@ class Customer extends CI_Controller
 	
 	var $key_name = 'KEY-API';
 	var $key_value = 'RESTAPI';
-	var $key_bearer = 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzMxMDExMzB9.XJ7bsK-MO1sBAbtHD3ccEAqhZVp3F2nJe7BX5kRjsDA';
+	var $key_bearer = 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzQ4NDc5NjZ9.5iZaIRWKc4L3X5RW8CqMc9DSKZFlKy8Y74-sx4YVFLc';
 	
 	public function index()
 	{
@@ -45,17 +45,41 @@ class Customer extends CI_Controller
 			'title' => 'Dashboard',
 		];
 
-		$this->load->view('dashboard_vw', $data);
+		$this->load->view('vw_dashboard');
 	}
 
+	
+	function produk()
+	{
+		$data['meta'] = [
+			'title' => 'Produk',
+		];
+
+		$this->load->view('vw_produk');
+	}
+	
 	function sablon()
 	{
 		$data['meta'] = [
-			'title' => 'sablon',
+			'title' => 'Sablon',
 		];
-		$this->load->view('vw_sablon', $data);
+
+		$this->load->view('vw_sablon');
 	}
 	
+	function pemesanan()
+	{
+		$this->client->http_header($this->key_bearer);
+
+		$data["tampil"] = json_decode($this->client->simple_get(APICUSTOMER, [$this->key_name => $this->key_value]));
+
+		if ($data["tampil"]->result == 0) {
+			echo"<script>location.href='https://google.com'</script>";
+		} else {
+			$this->load->view('vw_pemesanan', $data);
+		}
+	}
+
 	function addCustomer()
 	{
 		$this->load->view('en_customer');
@@ -87,7 +111,7 @@ class Customer extends CI_Controller
 	{
 		$this->client->http_header($this->key_bearer);
 
-		// ambil nilai npm
+		// ambil nilai kode pesananan 
 		$token = $this->uri->segment(3);
 
 		$tampil = json_decode($this->client->simple_get(APICUSTOMER, array("kodepesanan" => $token, $this->key_name => $this->key_value)));
