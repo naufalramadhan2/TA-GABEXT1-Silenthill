@@ -13,7 +13,6 @@ class Customer extends Token
             // panggil model "Mcustomer"
 			$this->load->model("Mcustomer","model",TRUE);
         }
-
 	// buat fungsi "GET"
 		function service_get()
 		{
@@ -52,18 +51,18 @@ class Customer extends Token
 				// $nama = $this->post("nama");
 				
 				// panggil fungsi "save_data"
-				$hasil = $this->model->save_data($data["kodepesanan"], $data["nama"], $data["telepon"], $data["konsumen"], base64_encode($data["token"]));
+				$hasil = $this->model->save_data($data["kodepesanan"], $data["nama"], $data["telepon"], $data["konsumen"], $data["token"]);
 
 				// jika proses post berhasil
 				if ($hasil == 0)
 				{
-					$this->response(array("status" => "Data Customer Berhasil Disimpan . . ."),200);
+					$this->response(array("status" => "Data Customer Berhasil Disimpan . . .","result" => 1, "error" => ""), 200);
 				}
 				
 				// jika proses post gagal
 				else
 				{
-					$this->response(array("status" => "Data Customer Gagal Disimpan !"),200);
+					$this->response(array("status" => "Data Customer Gagal Disimpan !","result" => 1, "error" => ""), 200);
 				}
 			}
 		}
@@ -83,17 +82,13 @@ class Customer extends Token
 
 				// panggil fungsi "update_data"
 				$hasil = $this->model->update_data($data["kodepesanan"], $data["nama"], $data["telepon"], $data["konsumen"], $data["token"]);
-
-				// jika proses update berhasil
-				if ($hasil == 0)
-				{
-					$this->response(array("status" => "Data Customer Berhasil Diupdate . . ."),200);
+				// jika hasil = 0
+				if ($hasil == 0) {
+					$this->response(array("status" => "Data Customer Berhasil Diubah", "result" => 1, "error" => ""), 200);
 				}
-				
-				// jika proses update gagal
-				else
-				{
-					$this->response(array("status" => "Data Customer Gagal Diupdate !"),200);
+				// jika hasil != 0
+				else {
+					$this->response(array("status" => "Data Customer Gagal Diubah !", "result" => 1, "error" => ""), 200);
 				}
 			}
 		}
