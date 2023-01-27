@@ -1,13 +1,12 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 03, 2023 at 05:05 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 27 Jan 2023 pada 21.40
+-- Versi server: 10.4.18-MariaDB
+-- Versi PHP: 7.3.27
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -21,13 +20,11 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_pbs_silenthill`
 --
-CREATE DATABASE IF NOT EXISTS `db_pbs_silenthill` DEFAULT CHARACTER SET latin1 COLLATE latin1_general_ci;
-USE `db_pbs_silenthill`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_auth`
+-- Struktur dari tabel `tb_auth`
 --
 
 CREATE TABLE `tb_auth` (
@@ -42,7 +39,7 @@ CREATE TABLE `tb_auth` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tb_auth`
+-- Dumping data untuk tabel `tb_auth`
 --
 
 INSERT INTO `tb_auth` (`id`, `user_id`, `key`, `level`, `ignore_limits`, `is_private_key`, `ip_addresses`, `date_created`) VALUES
@@ -51,7 +48,7 @@ INSERT INTO `tb_auth` (`id`, `user_id`, `key`, `level`, `ignore_limits`, `is_pri
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_customer`
+-- Struktur dari tabel `tb_customer`
 --
 
 CREATE TABLE `tb_customer` (
@@ -63,45 +60,46 @@ CREATE TABLE `tb_customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
--- Dumping data for table `tb_customer`
+-- Dumping data untuk tabel `tb_customer`
 --
 
 INSERT INTO `tb_customer` (`id`, `kodepesanan`, `nama`, `telepon`, `konsumen`) VALUES
-(1, '12345678', 'Harun Sip', '083312345678', 'Agen'),
-(2, '87654321', 'Udin Oke', '083387654321', 'Distributor');
+(2, '2023', 'Restikaaaa', '083387654321', 'Agen'),
+(24, '133', 'Elin', '0876483924', 'Pengecer'),
+(25, '839', 'naufal', '03938471223', 'Agen'),
+(34, '12323', 'tamaa', '0483476372', 'Distributor');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tb_auth`
+-- Indeks untuk tabel `tb_auth`
 --
 ALTER TABLE `tb_auth`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_customer`
+-- Indeks untuk tabel `tb_customer`
 --
 ALTER TABLE `tb_customer`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tb_auth`
+-- AUTO_INCREMENT untuk tabel `tb_auth`
 --
 ALTER TABLE `tb_auth`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tb_customer`
+-- AUTO_INCREMENT untuk tabel `tb_customer`
 --
 ALTER TABLE `tb_customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
-SET FOREIGN_KEY_CHECKS=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

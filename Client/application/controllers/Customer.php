@@ -6,7 +6,7 @@ class Customer extends CI_Controller
 	
 	var $key_name = 'KEY-API';
 	var $key_value = 'RESTAPI';
-	var $key_bearer = 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzQ4NDMwMTF9.CXrpoSGxDy6bRW_liwiONjDEgj8SQOlU7APF2nXc17k';
+	var $key_bearer = 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzQ4NTE5MzF9.E3E_JsWLmfA5LVrUyy_Tzfh9fT18qkDhbGRnN1oSvC0';
 	
 	public function index()
 	{
